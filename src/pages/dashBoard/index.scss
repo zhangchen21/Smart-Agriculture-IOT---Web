@@ -1,0 +1,91 @@
+.dashBoard {
+  background-color: #fbfbfb;
+  height: 100vh;
+  .head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    margin: 30px auto;
+    padding: 10px 50px;
+    background-color: #1f2633;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    border-radius: 10px;
+    .helloText {
+      color: white;
+      margin-left: 80px;
+    }
+  }
+  .content {
+    display: flex;
+    width: 90%;
+    margin: 30px auto;
+    padding-bottom: 30px;
+    .infos {
+      width: 33%;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+      border-radius: 10px;
+      padding: 30px;
+      .infoTitle {
+        font-weight: bold;
+        font-size: 27px;
+      }
+      .houseInfo {
+        font-weight: 300;
+        font-size: 20px;
+        height: 60px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+      }
+      .deviceInfo {
+        font-weight: 300;
+        font-size: 20px;
+        .chart {
+          margin-top: 20px;
+        }
+      }
+    }
+    .areas {
+      width: 65%;
+      margin-left: 2%;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+      border-radius: 10px;
+      padding: 30px;
+      .areaTitle {
+        font-weight: bold;
+        font-size: 27px;
+      }
+      .area {
+        width: 100%;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        padding: 10px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        border-radius: 20px;
+        cursor: pointer;
+        img {
+          height: 100px;
+          border-radius: 25%;
+        }
+        .areaInfo {
+          margin-left: 20px;
+          width: 70%;
+          .name {
+            font-size: 25px;
+          }
+          .address {
+            font-size: 20px;
+            margin-top: 5px;
+          }
+        }
+        .status {
+          float: right;
+        }
+      }
+    }
+  }
+}

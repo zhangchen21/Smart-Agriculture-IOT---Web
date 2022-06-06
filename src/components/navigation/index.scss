@@ -1,0 +1,18 @@
+@import '@alifd/theme-2/dist/next.css';
+
+.header {
+    .basic-nav {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        .fusion {
+            margin: 8px 20px;
+            width: 100px;
+            color: #FFFFFF;
+            font-size: 20px;
+        }     
+    }
+    .login-in {
+        cursor: pointer;
+    }
+}
