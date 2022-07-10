@@ -3,7 +3,8 @@ import * as echarts from 'echarts/core';
 import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 
-const Tem = () => {
+const Tem = (props) => {
+  const data = props.data;
   var option = {
     series: [
       {
@@ -69,7 +70,7 @@ const Tem = () => {
         },
         data: [
           {
-            value: 20
+            value: data.length ? data[0].data : 0
           }
         ]
       },
@@ -107,7 +108,7 @@ const Tem = () => {
         },
         data: [
           {
-            value: 20
+            value: data.length ? data[0].data : 0
           }
         ]
       }
@@ -119,11 +120,12 @@ const Tem = () => {
     var chartDom = document.getElementById('main');
     var myChart = echarts.init(chartDom);
     myChart.setOption(option); 
+    return(() => myChart.dispose())
     // eslint-disable-next-line
-  }, [])
+  })
 
   return (
-    <div id='main' style={{width: 550, height: 300}}>
+    <div id='main' style={{width: 400, height: 300}}>
     </div>
   );
 };

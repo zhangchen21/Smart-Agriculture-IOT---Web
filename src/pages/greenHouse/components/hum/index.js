@@ -3,7 +3,8 @@ import * as echarts from 'echarts/core';
 import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 
-const Tem2 = () => {
+const Hum = (props) => {
+  const data = props.data;
   var option = {
     series: [
       {
@@ -15,7 +16,7 @@ const Tem2 = () => {
         max: 60,
         splitNumber: 12,
         itemStyle: {
-          color: '#FFAB91'
+          color: '#195caf'
         },
         progress: {
           show: true,
@@ -64,12 +65,12 @@ const Tem2 = () => {
           offsetCenter: [0, '-15%'],
           fontSize: 25,
           fontWeight: 'bolder',
-          formatter: '{value} °C',
+          formatter: '{value} %rh',
           color: 'auto'
         },
         data: [
           {
-            value: 20
+            value: data.length ? data[0].data : 0
           }
         ]
       },
@@ -81,7 +82,7 @@ const Tem2 = () => {
         min: 0,
         max: 60,
         itemStyle: {
-          color: '#FD7347'
+          color: '#3897ef'
         },
         progress: {
           show: true,
@@ -107,7 +108,7 @@ const Tem2 = () => {
         },
         data: [
           {
-            value: 20
+            value: data.length ? data[0].data : 0
           }
         ]
       }
@@ -119,13 +120,14 @@ const Tem2 = () => {
     var chartDom = document.getElementById('main2');
     var myChart = echarts.init(chartDom);
     myChart.setOption(option);  
+    return(() => myChart.dispose())
     // eslint-disable-next-line
-  }, [])
+  })
 
   return (
-    <div id='main2' style={{width: 550, height: 300}}>
+    <div id='main2' style={{width: 400, height: 300}}>
     </div>
   );
 };
 
-export default Tem2;
+export default Hum;

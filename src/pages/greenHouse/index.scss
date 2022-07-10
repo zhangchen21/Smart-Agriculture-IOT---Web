@@ -19,10 +19,87 @@
       padding: 30px 50px;
       display: flex;
       flex-direction: column;
-      li {
-        cursor: pointer;
+      .left {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        li {
+          cursor: pointer;
+        }
+        .datas {
+          margin-top: 30px;
+          width: 100%;
+          box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
+          padding: 12px 20px;
+          .dataSet {
+            display: flex;
+            .dataBlock {
+              padding-right: 100px;
+              margin-right: 10px;
+              margin-top: 20px;
+              border-right: 1.5px solid rgb(219, 217, 217);
+              :last-child {
+                border-right: none;
+              }
+              .p1 {
+                color: #000;
+                font-size: 12px;
+                font-weight: 700;
+              }
+              .data {
+                box-sizing: border-box;
+                font-size: 36px;
+                color: #000;
+              }
+              .p2 {
+                font-size: 12px;
+                color: rgba(0,0,0,.4);
+                padding: 0;
+                margin: 0;
+              }          
+            }          
+          }
+          .ps {
+            line-height: 1.5;
+            font-size: 12px;
+            margin-top: 20px;
+            display: block;
+            color: rgba(187, 187, 187, 0.733);
+          }
+        }
+        .content {
+          margin-top: 50px;
+          width: 100%;
+          box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
+          padding: 12px 20px;
+          .title {
+            font-size: 15px;
+            font-weight: 500;
+            padding: 12px 16px;
+          }
+          .temHum {
+            display: flex;
+            .tem {
+              width: 50%;
+            }
+          }
+        }        
+      }
+      .right {
+        float: right;
+        width: 17%;
+        height: 100%;
+        margin-left: 3%;
+        margin-top: 30px;
+        .title {
+          margin-bottom: 15px;
+        }
       }
     }    
   }
-
+}
+.next-tabs-content {
+  color: rgb(17, 17, 17);
+  font-size: 12px;
+  padding: 12px;
 }

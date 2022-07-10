@@ -9,8 +9,7 @@
     margin: 30px auto;
     padding: 10px 50px;
     background-color: #1f2633;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
     .helloText {
       color: white;
       margin-left: 80px;
@@ -24,8 +23,7 @@
     .infos {
       width: 33%;
       background-color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-      border-radius: 10px;
+      box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
       padding: 30px;
       .infoTitle {
         font-weight: bold;
@@ -50,8 +48,7 @@
       width: 65%;
       margin-left: 2%;
       background-color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-      border-radius: 10px;
+      box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
       padding: 30px;
       .areaTitle {
         font-weight: bold;
@@ -64,8 +61,7 @@
         align-items: center;
         margin-top: 20px;
         padding: 10px 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-        border-radius: 20px;
+        box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
         cursor: pointer;
         img {
           height: 100px;

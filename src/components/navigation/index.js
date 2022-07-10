@@ -27,7 +27,7 @@ function Navigation() {
                 >
                 <Item key="portal" onClick={() => navigate('/portal')}>首页</Item>
                 <Item key="dashBoard" onClick={() => navigate('/dashBoard')}>控制台</Item>
-                <Item key="home" onClick={() => navigate('/home')}>主页</Item>
+                <Item key="home">预留</Item>
                 <Item key="greenHouse" onClick={() => navigate('/greenHouse')}>我的温室</Item>
             </Nav>            
         </div>
