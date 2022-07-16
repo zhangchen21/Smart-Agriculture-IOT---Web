@@ -4,6 +4,7 @@ import Navigation from "../../components/navigation/index";
 import DeviceChart  from "./components/deviceChart";
 import { useNavigate } from "react-router-dom";
 import './index.scss';
+import moment from "moment";
 
 function DashBoard() {
   let navigate = useNavigate();
@@ -26,7 +27,7 @@ function DashBoard() {
         <Avatar size={94} src="https://img.alicdn.com/tfs/TB1QS.4l4z1gK0jSZSgXXavwpXa-1024-1024.png" />
         <div className="helloText">
           <h1>欢迎来到您的 IOT 系统控制台</h1>
-          <h2>这是您在本系统度过的第1天</h2>
+          <h2>这是您在本系统度过的第 {moment().diff(moment('2022/07/06'),'days')} 天</h2>
         </div>
       </div>
       <div className="content">

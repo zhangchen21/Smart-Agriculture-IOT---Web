@@ -6,6 +6,12 @@ import { CanvasRenderer } from 'echarts/renderers';
 const Tem = (props) => {
   const data = props.data;
   var option = {
+    title: {
+      text: props.title,
+      textStyle: {
+        fontWeight: 'normal'
+      }
+    },
     series: [
       {
         type: 'gauge',
@@ -130,4 +136,4 @@ const Tem = (props) => {
   );
 };
 
-export default Tem;
+export default React.memo(Tem);

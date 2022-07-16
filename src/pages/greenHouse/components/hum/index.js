@@ -6,6 +6,12 @@ import { CanvasRenderer } from 'echarts/renderers';
 const Hum = (props) => {
   const data = props.data;
   var option = {
+    title: {
+      text: props.title,
+      textStyle: {
+        fontWeight: 'normal'
+      }
+    },
     series: [
       {
         type: 'gauge',
@@ -130,4 +136,4 @@ const Hum = (props) => {
   );
 };
 
-export default Hum;
+export default React.memo(Hum);
