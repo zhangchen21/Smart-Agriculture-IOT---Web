@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Nav, Breadcrumb, Tab, Timeline, Switch, NumberPicker, Button, Message  } from '@alifd/next';
+import { Nav, Breadcrumb, Tab, Switch, NumberPicker, Button, Message  } from '@alifd/next';
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/navigation/index";
 import Tem from './components/tem';
-// import Tem1 from './components/tem1';
 import Hum from './components/hum';
 import Water from './components/water';
-import axios from 'axios';
-import { Serve } from '../../constant';
-import moment from 'moment';
+import Journal from './components/journal';
+import api from '../../api/api'
 
 import './index.scss';
 
@@ -27,58 +25,86 @@ const Houses = [
   //   id: 3
   // },
 ];
-const TimelineItem = Timeline.Item;
+const { getIrrigationValue, getTemp, getHum, getWater, sendAutoIrrigationValue, getFanValue, sendAutoFanValue } = api;
 
 const GreenHouse = () => {
   let navigate = useNavigate();
   const [dataList, setDataList] = useState({temp: [], hum: [], water: []});
   const [autoIrrigation, setAutoIrrigation] = useState(false);
   const [autoIrrigationValue, setAutoIrrigationValue] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [autoIrrigationLoading, setAutoIrrigationLoading] = useState(false);
+  const [autoFan, setAutoFan] = useState(false);
+  const [autoFanValue, setAutoFanValue] = useState(0);
+  const [autoFanLoading, setAutoFanLoading] = useState(false);
 
   useEffect(() => {
-    axios({
-      url:`${Serve}/getIrrigationValue`,
-      method:'get',
-    }).then(
-      (res) => {
-        const { irrigationValue } = res.data;
-        setAutoIrrigation(true);
-        setAutoIrrigationValue(irrigationValue);
-      }
+    getIrrigationValue().then(res => {
+      const { irrigationValue } = res;
+      setAutoIrrigation(irrigationValue > 0);
+      setAutoIrrigationValue(irrigationValue);       
+    });
+    getFanValue().then(res => {
+      const { getFanValue } = res;
+      setAutoFan(getFanValue > 0);
+      setAutoFanValue(getFanValue);       
+    });
+    getTemp().then(res => 
+      setDataList((oldState) => {return {...oldState, temp: res}})
     );
-    axios({
-      url:`${Serve}/getTemp`,
-      method:'get',
-    }).then(
-      res => setDataList((oldState) => {return {...oldState, temp: res.data}})
+    getHum().then(res => 
+      setDataList((oldState) => {return {...oldState, hum: res}})
     );
-    axios({
-      url:`${Serve}/getHum`,
-      method:'get'
-    }).then(
-        res => setDataList((oldState) => {return {...oldState, hum: res.data}})
-    );
-    axios({
-      url:`${Serve}/getWater`,
-      method:'get'
-    }).then(
-      res => setDataList((oldState) => {return {...oldState, water: res.data}})
+    getWater().then(res => 
+      setDataList((oldState) => {return {...oldState, water: res}})
     )
   }, []);
 
-  const postAutoIrrigationValue = async () => {
-    setLoading(true);
-    await axios({
-      url:`${Serve}/setAutoIrrigationValue`,
-      method:'get',
-      params: {
-        autoIrrigationValue
-      }
-    }).then(
-      () => setLoading(false)
-    );
-    Message.notice("自动灌溉阈值设定成功");
+  const postAutoIrrigationValue = async (shutFlag = false) => {
+    setAutoIrrigationLoading(true);
+    sendAutoIrrigationValue(shutFlag ? 0 : autoIrrigationValue).then(() => {
+      setAutoIrrigationLoading(false);
+      Message.notice(`智慧灌溉${shutFlag ? '已关闭' : '阈值设定成功'}`);
+    });
+  }
+
+  const postAutoFanValue = async (shutFlag = false) => {
+    setAutoFanLoading(true);
+    sendAutoFanValue(shutFlag ? 0 : autoFanValue).then(() => {
+      setAutoFanLoading(false);
+      Message.notice(`智慧控温${shutFlag ? '已关闭' : '阈值设定成功'}`);
+    });
+  }
+
+  const createAutoBar = (text, state, setState, value, setValue, loading, postValue) => {
+    return (
+      <div style={{fontSize: '30px', fontWeight: '600'}}>
+        <Switch
+          size="small"
+          onChange={() => {
+            if(state) postValue(true);
+            setState(!state)
+          }}
+          style={{ verticalAlign: "middle" }}
+          checked={state}
+        />
+        <span style={{fontSize: '15px', marginLeft: '5px', verticalAlign: "middle"}}>
+          {state ? '已开启' : '开启'}{text}
+        </span>
+        {
+          state &&
+          <div style={{fontSize: '15px'}}>
+            请设定您期望{text}的阈值： 
+            <NumberPicker onChange={setValue} alwaysShowTrigger value={value}/>
+            <Button 
+              type="primary" 
+              style={{marginLeft: '5px'}}
+              loading={loading}
+              onClick={postValue}
+            >确定</Button>
+          </div>
+        }
+      </div>
+    )
   }
 
   return (
@@ -129,42 +155,20 @@ const GreenHouse = () => {
                 </Tab>            
               </div>
               <div className="content">
-                <h2>今日温湿度数据</h2>
-                <div className="temHum">
-                  <div className='tem'>
-                    <Tem data={dataList.temp} title={'当前温度'}></Tem>
-                    <Water data={dataList.temp} id={'tempLineChart'} title={'今日温度变化'}></Water>
-                  </div>
-                  <div className='tem'>
-                    <Hum data={dataList.hum} title={'当前湿度'}></Hum>
-                    <Water data={dataList.temp} id={'humLineChart'} title={'今日湿度变化'}></Water>
-                  </div>                             
+                <h2>今日温度数据</h2>
+                {createAutoBar('智慧控温', autoFan, setAutoFan, autoFanValue, setAutoFanValue, autoFanLoading, setAutoFanLoading, postAutoFanValue)}
+                <div className='temHum' style={{marginTop: '15px'}}>
+                  <Tem data={dataList.temp} title={'当前温度'}></Tem>
+                  <Water data={dataList.temp} id={'tempLineChart'} title={'今日温度变化'}></Water>
                 </div>
-                {/* <div className='tem1'><Tem1></Tem1></div>         */}
+                <h2>今日湿度数据</h2>
+                <div className='temHum'>
+                  <Hum data={dataList.hum} title={'当前湿度'}></Hum>
+                  <Water data={dataList.temp} id={'humLineChart'} title={'今日湿度变化'}></Water>
+                </div>                             
                 <div className='water'>
                   <h2> 今日水位数据</h2>
-                  <Switch
-                    size="small"
-                    onChange={() => setAutoIrrigation(!autoIrrigation)}
-                    style={{ verticalAlign: "middle" }}
-                    checked={autoIrrigation}
-                  />
-                  <span style={{fontSize: '15px', marginLeft: '5px', verticalAlign: "middle"}}>
-                    {autoIrrigation ? '已开启' : '开启'}自动灌溉
-                  </span>
-                  {
-                    autoIrrigation &&
-                    <div style={{fontSize: '15px'}}>
-                      请设定您期望自动灌溉的阈值： 
-                      <NumberPicker onChange={setAutoIrrigationValue} alwaysShowTrigger value={autoIrrigationValue}/>
-                      <Button 
-                        type="primary" 
-                        style={{marginLeft: '5px'}}
-                        loading={loading}
-                        onClick={postAutoIrrigationValue}
-                      >确定</Button>
-                    </div>
-                  }       
+                  {createAutoBar('智慧灌溉', autoIrrigation, setAutoIrrigation, autoIrrigationValue, setAutoIrrigationValue, autoIrrigationLoading, setAutoIrrigationLoading, postAutoIrrigationValue)}
                   <div style={{height: '15px'}}/> 
                   <Water 
                     data={dataList.water} 
@@ -176,35 +180,9 @@ const GreenHouse = () => {
               </div>            
             </div>
             <div className="right">
-              <div className='title'> 温室日志</div>
-                <Timeline>
-                  <TimelineItem
-                    title="温室上线"
-                    content="[Xi'an] 温室上线"
-                    time={"2022-07-07 10:30:00"}
-                    state="success"
-                  />
-                  <TimelineItem
-                    title="温湿度传感器上线"
-                    content="[Xi'an] 温湿度传感器上线"
-                    time={"2022-07-07 10:30:00"}
-                    state="success"
-                  />
-                  <TimelineItem
-                    title="水泵控制系统上线"
-                    content="[Xi'an] 水泵控制系统上线"
-                    time={"2022-07-07 10:30:00"}
-                    state="success"
-                  />
-                  <TimelineItem
-                    title="正常运行"
-                    content="[Xi'an] 温室正常运行，温湿度传感器正常，水泵控制系统正常，无报警"
-                    time={moment().format('YYYY-MM-DD HH:mm:ss')}
-                    state="process"
-                  />
-                </Timeline> 
-              </div>            
-            </div>
+              <Journal />
+            </div>            
+          </div>
         </div>        
       </div>
     </div>
