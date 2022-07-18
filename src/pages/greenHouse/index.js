@@ -40,13 +40,17 @@ const GreenHouse = () => {
   useEffect(() => {
     getIrrigationValue().then(res => {
       const { irrigationValue } = res;
-      setAutoIrrigation(irrigationValue > 0);
-      setAutoIrrigationValue(irrigationValue);       
+      if(irrigationValue > 0) {
+        setAutoIrrigation(true);
+        setAutoIrrigationValue(irrigationValue);       
+      }
     });
     getFanValue().then(res => {
-      const { getFanValue } = res;
-      setAutoFan(getFanValue > 0);
-      setAutoFanValue(getFanValue);       
+      const { fanValue } = res;
+      if(fanValue > 0) {
+        setAutoFan(true);
+        setAutoFanValue(fanValue);        
+      }
     });
     getTemp().then(res => 
       setDataList((oldState) => {return {...oldState, temp: res}})
