@@ -67,7 +67,7 @@ const GreenHouse = () => {
     });
   }
 
-  const postAutoFanValue = async (shutFlag = false) => {
+  const postAutoFanValue = async (shutFlag) => {
     setAutoFanLoading(true);
     sendAutoFanValue(shutFlag ? 0 : autoFanValue).then(() => {
       setAutoFanLoading(false);
@@ -86,6 +86,7 @@ const GreenHouse = () => {
           }}
           style={{ verticalAlign: "middle" }}
           checked={state}
+          disabled={loading}
         />
         <span style={{fontSize: '15px', marginLeft: '5px', verticalAlign: "middle"}}>
           {state ? '已开启' : '开启'}{text}
@@ -99,7 +100,10 @@ const GreenHouse = () => {
               type="primary" 
               style={{marginLeft: '5px'}}
               loading={loading}
-              onClick={postValue}
+              onClick={() => {
+                postValue(value ? false : true);
+                value || setState(false)
+              }}
             >确定</Button>
           </div>
         }
@@ -156,7 +160,7 @@ const GreenHouse = () => {
               </div>
               <div className="content">
                 <h2>今日温度数据</h2>
-                {createAutoBar('智慧控温', autoFan, setAutoFan, autoFanValue, setAutoFanValue, autoFanLoading, setAutoFanLoading, postAutoFanValue)}
+                {createAutoBar('智慧控温', autoFan, setAutoFan, autoFanValue, setAutoFanValue, autoFanLoading, postAutoFanValue)}
                 <div className='temHum' style={{marginTop: '15px'}}>
                   <Tem data={dataList.temp} title={'当前温度'}></Tem>
                   <Water data={dataList.temp} id={'tempLineChart'} title={'今日温度变化'}></Water>
@@ -168,7 +172,7 @@ const GreenHouse = () => {
                 </div>                             
                 <div className='water'>
                   <h2> 今日水位数据</h2>
-                  {createAutoBar('智慧灌溉', autoIrrigation, setAutoIrrigation, autoIrrigationValue, setAutoIrrigationValue, autoIrrigationLoading, setAutoIrrigationLoading, postAutoIrrigationValue)}
+                  {createAutoBar('智慧灌溉', autoIrrigation, setAutoIrrigation, autoIrrigationValue, setAutoIrrigationValue, autoIrrigationLoading, postAutoIrrigationValue)}
                   <div style={{height: '15px'}}/> 
                   <Water 
                     data={dataList.water} 
