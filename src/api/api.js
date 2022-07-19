@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { Serve } from '../constant';
+import { Serve as domin, port } from '../constant';
+
+const Serve = domin + ':' + port;
 
 const api = {
   async getIrrigationValue() {
@@ -59,6 +61,17 @@ const api = {
       method:'get',
       params: {
         autoFanValue
+      }
+    })
+    return data;
+  },
+
+  async getPredictionResult(photoName) {
+    const { data } = await axios({
+      url:`${Serve}/getPredictionResult`,
+      method:'get',
+      params: {
+        photoName
       }
     })
     return data;

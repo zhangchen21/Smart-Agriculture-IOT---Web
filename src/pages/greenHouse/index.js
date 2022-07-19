@@ -172,7 +172,7 @@ const GreenHouse = () => {
                 <h2>今日湿度数据</h2>
                 <div className='temHum'>
                   <Hum data={dataList.hum} title={'当前湿度'}></Hum>
-                  <Water data={dataList.temp} id={'humLineChart'} title={'今日湿度变化'}></Water>
+                  <Water data={dataList.hum} id={'humLineChart'} title={'今日湿度变化'}></Water>
                 </div>                             
                 <div className='water'>
                   <h2> 今日水位数据</h2>

@@ -1,0 +1,32 @@
+.home {
+    .steps {
+        margin-top: 70px;
+    }
+    .content {
+        display: flex;
+        margin-top: 70px;
+        .upLoad {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img {
+                width: 40%;
+                margin-bottom: 50px;
+            }
+        }
+        .result {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .resultContent {
+                img {
+                    width: 40%;
+                }
+            }
+        }        
+    }
+
+}
