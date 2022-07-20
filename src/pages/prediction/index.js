@@ -8,17 +8,13 @@ import './index.scss';
 
 const { getPredictionResult } = api;
 
-const info = {
-    
-}
-
 function Prediction() {
     const [step, setStep] = useState(-1);
     const [photoName, setPhotoName] = useState("");
     const [resultGetting, setResultGetting] = useState(false);
     const [photo1, setPhoto1] = useState("https://img0.baidu.com/it/u=1642242308,788079207&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500");
-    const [photo2, setPhoto2] = useState("");
-    const [bugName, setBugName] = useState("");
+    const [photo2, setPhoto2] = useState("https://img0.baidu.com/it/u=1642242308,788079207&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500");
+    const [bugData, setBugData] = useState("");
 
     const upLoadPhoto = {
         action: "图片上传",
@@ -38,7 +34,7 @@ function Prediction() {
             getPredictionResult(photoName).then((res) => {
                 setResultGetting(false);
                 setPhoto2(`${Serve}/attachment/result.jpg`)
-                setBugName(res.bugName)
+                setBugData(res?.data[0])
             });
             setResultGetting(true);
             setStep(1);                                        
@@ -81,27 +77,25 @@ function Prediction() {
                         </Button>      
                     </Upload>
                 </div>
-                <div className="result">
-                    {
-                        photo2.length === 0 
-                        ?   
-                            <Button
-                                type="secondary" 
-                                onClick={prediction}
-                                loading={resultGetting}
-                            >
-                                点击进行预测
-                            </Button>
-                        : 
-                            <div className="resultContent">
-                                <img src={photo2} alt="resultPhoto" />
-                                <h2>{bugName}</h2>
-                                <h3>{info[bugName]}</h3>
-                            </div>
-                    }
-                </div>                
+                <div className="resultPhoto">
+                    <img src={photo2} alt="resultPhoto" /> 
+                    <Button
+                        type="secondary" 
+                        onClick={prediction}
+                        loading={resultGetting}
+                    >
+                        点击进行预测
+                    </Button>
+                </div>
+                <div className="resultContent">
+                    <h2>昆虫种类</h2>
+                    <div>{bugData?.chineseName}</div>
+                    <h2>昆虫习性</h2>
+                    <div>{bugData?.description}</div>
+                    <h2>防治方法</h2>
+                    <div>{bugData?.methon}</div>                                    
+                </div>              
             </div>
-
         </div>
     )
   }
