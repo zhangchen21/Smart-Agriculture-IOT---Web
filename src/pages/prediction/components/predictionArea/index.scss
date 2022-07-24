@@ -1,11 +1,18 @@
 .predictionArea {
   height: 100%;
   width: 100%;
-  padding: 30px 50px;
+  padding: 10px 20px 50px;
   display: flex;
   flex-direction: column;
+  .predictionContent {
+    box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
+    padding: 10px 20px 50px;
+    h2 {
+    font-weight: bold;        
+    }
+  }
   .steps {
-      margin-top: 70px;
+      margin-top: 20px;
   }
   .content {
       display: flex;
@@ -34,6 +41,8 @@
       }                  
   }          
   .resultContent {     
-      margin: 0 auto;              
+      margin-top: 30px;; 
+      padding: 10px 20px 50px;
+      box-shadow: 0 2px 4px 0 rgb(211, 208, 208);             
   }    
 }
