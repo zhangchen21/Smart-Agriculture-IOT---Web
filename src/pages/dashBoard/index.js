@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Progress, Icon } from '@alifd/next';
+import { Avatar, Progress, Icon, Message } from '@alifd/next';
 import Navigation from "../../components/navigation/index";
 import DeviceChart  from "./components/deviceChart";
 import { useNavigate } from "react-router-dom";
@@ -12,11 +12,17 @@ function DashBoard() {
     {
       name: '我的温室1',
       address: '西安交通大学创新港',
-      photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcAoyHttAX5eceiW6iPae99CGiWxADx5OsEw&usqp=CAU',
+      photoUrl: 'https://img2.baidu.com/it/u=22876370,3173813154&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
       isSigned: true
-    }
+    },
+    {
+      name: '测试温室',
+      address: '测试地点***',
+      photoUrl: 'https://img1.baidu.com/it/u=1999542200,2877663993&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      isSigned: false
+    },
   ]
-  const greenHouseNum = 1;
+  const greenHouseNum = areas.length;
 
   return (
     <div className="dashBoard">
@@ -24,7 +30,7 @@ function DashBoard() {
           <Navigation></Navigation>
       </div>
       <div className="head">
-        <Avatar size={94} src="https://img.alicdn.com/tfs/TB1QS.4l4z1gK0jSZSgXXavwpXa-1024-1024.png" />
+        <Avatar size={94} src="https://img2.baidu.com/it/u=2331153596,856026569&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" />
         <div className="helloText">
           <h1>欢迎来到您的 IOT 系统控制台</h1>
           <h2>这是您在本系统度过的第 {moment().diff(moment('2022/07/06'),'days')} 天</h2>
@@ -48,7 +54,10 @@ function DashBoard() {
             areas.map((area) => (
               <div
                 className="area"
-                onClick={() => navigate('/greenHouse')}
+                onClick={() => {
+                  if(area.isSigned) navigate('/greenHouse')
+                  else Message.notice("未检测到该温室上线！");
+                }}
                 >
                 <img src={area.photoUrl} alt="" />
                 <div className="areaInfo">
@@ -56,8 +65,8 @@ function DashBoard() {
                   <div className="address">地址:{area.address}</div>
                 </div>
                 <div className="status">
-                  <Icon type="success" style={{ color: "#1DC11D", marginRight: "10px" }} />
-                  在线
+                  <Icon type={area.isSigned ? 'success' : 'error'} style={{ color: `${area.isSigned ? '#1DC11D' : 'red'}`, marginRight: "10px" }} />
+                  {area.isSigned ? '在线' : '离线'}
                 </div>
               </div>  
             ))

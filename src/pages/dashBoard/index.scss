@@ -21,7 +21,7 @@
     margin: 30px auto;
     padding-bottom: 30px;
     .infos {
-      width: 33%;
+      width: 28%;
       background-color: white;
       box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
       padding: 30px;
@@ -45,7 +45,7 @@
       }
     }
     .areas {
-      width: 65%;
+      width: 70%;
       margin-left: 2%;
       background-color: white;
       box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
@@ -62,9 +62,10 @@
         margin-top: 20px;
         padding: 10px 20px;
         box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
+        border-radius: 10px;
         cursor: pointer;
         img {
-          height: 100px;
+          height: 80px;
           border-radius: 25%;
         }
         .areaInfo {

@@ -14,11 +14,13 @@ const { Item } = Nav;
 const Houses = [
   {
     name: '我的温室1',
-    id: 1
+    id: 1,
+    isSigned: true
   },
   {
     name: '我的温室2',
-    id: 2
+    id: 2,
+    isSigned: false
   },
   // {
   //   name: '我的温室3',
@@ -126,7 +128,7 @@ const GreenHouse = () => {
           <Nav type='line' defaultSelectedKeys={['1']} >
             {
               Houses.map((house) => (
-                <Item icon="chart-pie" key={house.id}>{house.name}</Item>
+                <Item icon="chart-pie" key={house.id} disabled={!house.isSigned}>{house.name}</Item>
               ))
             }
           </Nav>
