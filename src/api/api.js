@@ -76,6 +76,14 @@ const api = {
     })
     return data;
   },
+
+  async getPredictionHistory() {
+    const { data } = await axios({
+      url:`${Serve}/getPredictionHistory`,
+      method:'get',
+    })
+    return data;
+  },
 }
 
 export default api;

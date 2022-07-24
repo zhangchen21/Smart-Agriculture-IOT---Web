@@ -16,10 +16,10 @@ const Houses = [
     name: '我的温室1',
     id: 1
   },
-  // {
-  //   name: '我的温室2',
-  //   id: 2
-  // },
+  {
+    name: '我的温室2',
+    id: 2
+  },
   // {
   //   name: '我的温室3',
   //   id: 3
@@ -123,7 +123,7 @@ const GreenHouse = () => {
       <div className="house">
         <div className="sideBar">
           <div className="title">我的温室</div>
-          <Nav style={{ width: "200px" }} type='line' defaultSelectedKeys={['1']} >
+          <Nav type='line' defaultSelectedKeys={['1']} >
             {
               Houses.map((house) => (
                 <Item icon="chart-pie" key={house.id}>{house.name}</Item>

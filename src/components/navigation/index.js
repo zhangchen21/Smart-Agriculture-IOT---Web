@@ -13,7 +13,7 @@ function Navigation() {
         style={{color: 'black'}}
     >智慧农业温室 IOT 系统</span>;
     // 根据 url 设置 defaultSelectedKeys
-    page !== window.location.href.split('/').at(-1) && setPage(window.location.href.split('/').at(-1));
+    page !== window.location.href.split('/').at(3) && setPage(window.location.href.split('/').at(3));
     return (
         <div className="header">
             <Nav

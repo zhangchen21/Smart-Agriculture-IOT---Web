@@ -101,8 +101,8 @@ function Portal() {
             <div className="btn" onClick={() => navigate('/dashBoard')}>
               快速开始<Icon type="arrow-right" />
             </div>     
-            <div className="btn" onClick={() => navigate('/')} style={{backgroundColor: 'white', color: '#F72C5B', border: '1px #F72C5B solid'}}>
-              查看介绍<Icon type="arrow-right" />
+            <div className="btn" onClick={() => navigate('/prediction')} style={{backgroundColor: 'white', color: '#F72C5B', border: '1px #F72C5B solid'}}>
+              AI虫害识别<Icon type="arrow-right" />
             </div>     
           </div>
         </div>
