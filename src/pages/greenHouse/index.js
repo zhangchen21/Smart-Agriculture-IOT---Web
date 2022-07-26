@@ -54,15 +54,19 @@ const GreenHouse = () => {
         setAutoFanValue(fanValue);        
       }
     });
-    getTemp().then(res => 
-      setDataList((oldState) => {return {...oldState, temp: res}})
-    );
-    getHum().then(res => 
-      setDataList((oldState) => {return {...oldState, hum: res}})
-    );
-    getWater().then(res => 
-      setDataList((oldState) => {return {...oldState, water: res}})
-    )
+    const timer = setInterval(() => {
+      getTemp().then(res => 
+        setDataList((oldState) => {return oldState.temp.length !== res.length ? {...oldState, temp: res} : oldState})
+      );
+      getHum().then(res => 
+        setDataList((oldState) => {return oldState.hum.length !== res.length ? {...oldState, hum: res} : oldState})
+      );
+      getWater().then(res => 
+        setDataList((oldState) => {return oldState.water.length !== res.length ? {...oldState, water: res} : oldState})
+      )
+    }, 3000)
+
+    return () => clearInterval(timer)
   }, []);
 
   const postAutoIrrigationValue = async (shutFlag = false) => {
@@ -169,12 +173,20 @@ const GreenHouse = () => {
                 {createAutoBar('智慧控温', autoFan, setAutoFan, autoFanValue, setAutoFanValue, autoFanLoading, postAutoFanValue)}
                 <div className='temHum' style={{marginTop: '15px'}}>
                   <Tem data={dataList.temp} title={'当前温度'}></Tem>
-                  <Water data={dataList.temp} id={'tempLineChart'} title={'今日温度变化'}></Water>
+                  <div className='LineChart'><Water data={dataList.temp} id={'tempLineChart'} title={'今日温度变化'}></Water></div>
                 </div>
                 <h2>今日湿度数据</h2>
+                <Switch
+                  size="small"
+                  style={{ verticalAlign: "middle" }}
+                  disabled
+                />
+                <span style={{fontSize: '15px', marginLeft: '5px', verticalAlign: "middle"}}>
+                  开启湿度控制
+                </span>
                 <div className='temHum'>
                   <Hum data={dataList.hum} title={'当前湿度'}></Hum>
-                  <Water data={dataList.hum} id={'humLineChart'} title={'今日湿度变化'}></Water>
+                  <div className='LineChart'><Water data={dataList.hum} id={'humLineChart'} title={'今日湿度变化'}></Water></div>
                 </div>                             
                 <div className='water'>
                   <h2> 今日水位数据</h2>

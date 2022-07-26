@@ -19,8 +19,8 @@ const Hum = (props) => {
         startAngle: 200,
         endAngle: -20,
         min: 0,
-        max: 60,
-        splitNumber: 12,
+        max: 100,
+        splitNumber: 10,
         itemStyle: {
           color: '#195caf'
         },
@@ -76,7 +76,7 @@ const Hum = (props) => {
         },
         data: [
           {
-            value: data.length ? data[0].data : 0
+            value: data.length ? data.at(-1).data : 0
           }
         ]
       },
@@ -86,7 +86,7 @@ const Hum = (props) => {
         startAngle: 200,
         endAngle: -20,
         min: 0,
-        max: 60,
+        max: 100,
         itemStyle: {
           color: '#3897ef'
         },
@@ -114,7 +114,7 @@ const Hum = (props) => {
         },
         data: [
           {
-            value: data.length ? data[0].data : 0
+            value: data.length ? data.at(-1).data : 0
           }
         ]
       }

@@ -36,6 +36,12 @@ function Journal() {
                 time={moment().format('YYYY-MM-DD HH:mm:ss')}
                 state="process"
               />
+              <TimelineItem
+                title="水泵开启"
+                content="[Xi'an] 检测到水位低于设置阈值，开启水泵注水"
+                time={moment().format('YYYY-MM-DD HH:mm:ss')}
+                state="process"
+              />
             </Timeline>    
         </div>
     )

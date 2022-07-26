@@ -5,6 +5,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 
 const Tem = (props) => {
   const data = props.data;
+
   var option = {
     title: {
       text: props.title,
@@ -18,9 +19,9 @@ const Tem = (props) => {
         center: ['50%', '60%'],
         startAngle: 200,
         endAngle: -20,
-        min: 0,
+        min: -20,
         max: 60,
-        splitNumber: 12,
+        splitNumber: 8,
         itemStyle: {
           color: '#FFAB91'
         },
@@ -76,7 +77,7 @@ const Tem = (props) => {
         },
         data: [
           {
-            value: data.length ? data[0].data : 0
+            value: data.length ? data.at(-1).data : 0
           }
         ]
       },
@@ -85,7 +86,7 @@ const Tem = (props) => {
         center: ['50%', '60%'],
         startAngle: 200,
         endAngle: -20,
-        min: 0,
+        min: -20,
         max: 60,
         itemStyle: {
           color: '#FD7347'
@@ -114,7 +115,7 @@ const Tem = (props) => {
         },
         data: [
           {
-            value: data.length ? data[0].data : 0
+            value: data.length ? data.at(-1).data : 0
           }
         ]
       }

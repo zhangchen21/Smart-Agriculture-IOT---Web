@@ -1,0 +1,19 @@
+.resultHistory {
+  padding-left: 20px;
+  .Statistics {
+    width: 90%;
+    box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
+    margin: 10px 0;
+    padding: 20px 50px;
+  }
+  .list {
+    width: 90%;
+    padding-bottom: 50px;
+    min-width: 1000px;
+    padding: 20px 50px;
+    box-shadow: 0 2px 4px 0 rgb(211, 208, 208);
+    h2 {
+      font-weight: bold;
+    }
+  }
+}

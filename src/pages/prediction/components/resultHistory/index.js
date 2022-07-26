@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
-import { List, Box, Button, Divider } from '@alifd/next';
+import { List, Box, Button, Divider, Dialog, Progress, Icon } from '@alifd/next';
 import PieChart from './components/PieChart/index';
 import api from '../../../../api/api';
 import { Serve } from '../../../../constant'
@@ -25,43 +25,60 @@ const mockdata = [
   },
 ];
 
-const actions = (
-  <Box
-    direction="row"
-    align="center"
-    style={{ whiteSpace: "nowrap", height: "100%", paddingLeft: 100 }}
-  >
-    <Button text type="primary">
-      紧急
-    </Button>
-    <Divider direction="ver" />
-    <Button text type="primary">
-      待办
-    </Button>
-    <Divider direction="ver" />
-    <Button text type="primary">
-      安全
-    </Button>
-  </Box>
-);
-
 export const ResultHistory = memo((props) => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [dialog, setDialog] = useState(false);
+  const [percent, setPercent] = useState(0);
+  var timer = null;
+  const opentimer = () => {
+    setDialog(true);
+    timer = setInterval(() => {
+      setPercent(old => percent < 100 ? old + 10 : old)
+    }, 800)
+  }
+  const stoptimer = () => {console.log(timer);setDialog(false); setPercent(0); clearInterval(timer)}
 
   useEffect(() => {
-    getPredictionHistory().then(res => 
-      setData(res)
-  )}, [])
+    getPredictionHistory().then(res => {
+      setData(res);
+    })}, [])
+
+  const textRender = percent => {
+    if (percent > 100) {
+      return <Icon type="select" size="medium" />;
+    }
+    return `${percent}%`;
+  };
+
+  const actions = (
+    <Box
+      direction="row"
+      align="center"
+      style={{ whiteSpace: "nowrap", height: "100%", paddingLeft: 100 }}
+    >
+      <Button text type="primary" onClick={opentimer}>
+        紧急
+      </Button>
+      <Divider direction="ver" />
+      <Button text type="primary">
+        待办
+      </Button>
+      <Divider direction="ver" />
+      <Button text type="primary">
+        安全
+      </Button>
+    </Box>
+  );
 
   return (
     <div className="resultHistory">
       <div className="Statistics">
-        <PieChart data={data.map((el) => el.chineseName)} id={'bugPieChart'} title={'害虫识别结果统计'} />
+        <PieChart data={data} id={'bugPieChart'} title={'害虫识别结果统计'} />
       </div>
       <div className="list">
         <h2>历史识别数据</h2>
         <List
-          dataSource={data || mockdata}
+          dataSource={data.reverse() || mockdata}
           size={'medium'}
           renderItem={(item) => (
             <List.Item
@@ -76,6 +93,22 @@ export const ResultHistory = memo((props) => {
           )}
         />          
       </div>
+      <Dialog
+            v2
+            title="正在进行智能匹配农药喷洒"
+            visible={dialog}
+            onOk={stoptimer}
+            onClose={() => {setDialog(false); setPercent(0); clearInterval(timer)}}
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+          >
+            <p>已开启智能匹配农药喷洒，以下为喷洒进度</p>
+            <Progress
+              percent={percent > 100 ? 100 : percent}
+              textRender={textRender}
+              shape="circle"
+              color={`hsl(${percent * 6 + 60}, 90%, 50%)`}
+            />
+      </Dialog>
     </div> 
   )
 })

@@ -15,7 +15,7 @@ export const PredictionArea = memo(() => {
   const [resultGetting, setResultGetting] = useState(false);
   const [photo1, setPhoto1] = useState("https://img0.baidu.com/it/u=1642242308,788079207&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500");
   const [photo2, setPhoto2] = useState("https://img0.baidu.com/it/u=1642242308,788079207&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500");
-  const [bugData, setBugData] = useState(null);
+  const [bugData, setBugData] = useState("");
 
   const upLoadPhoto = {
     action: "图片上传",
@@ -29,7 +29,7 @@ export const PredictionArea = memo(() => {
       getPredictionResult(photoName).then((res) => {
         setResultGetting(false);
         setPhoto2(`${Serve}/attachment/result.jpg`)
-        setBugData(res?.data?.[0])
+        setBugData(res?.data[0])
       });
       setResultGetting(true);
       setStep(1);                                        

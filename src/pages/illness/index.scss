@@ -1,0 +1,23 @@
+.pridiction {
+    height: 100vh;
+    .body {
+        display: flex;
+        height: calc(100% - 60px);
+        .sideBar {
+            height: 100%;
+            width: 200px;
+            flex-grow: 0;
+            .title {
+              font-size: 15px;
+              padding: 20px 25px 10px;
+              font-weight: bold;
+            }
+        }
+        .details {
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            padding: 30px 50px;
+        }
+    }
+}
