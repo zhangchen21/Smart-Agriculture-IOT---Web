@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import * as echarts from 'echarts/core';
 import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
@@ -6,8 +6,13 @@ import moment from 'moment';
 
 const Water = (props) => {
   const { data, id, isArea = false, title } = props;
+  if(data.length > 12) data.splice(0, data.length - 12);
+  const [myChart, setMyChart] = useState(null);
+  const timeData = data.map(el => moment(el.time).format('HH:mm:ss'));
+  const valueData = data.map(el => Number(el.data));
 
-  var option = {
+  var option = useMemo(() => {
+    return {
     title: {
       text: title,
       textStyle: {
@@ -16,18 +21,18 @@ const Water = (props) => {
     },
     xAxis: {
       type: 'category',
-      data: data.map((el) => {return moment(el.time).format('HH:mm:ss')})
+      data: timeData
     },
     yAxis: {
       type: 'value'
     },
     series: [
       {
-        data: data.map((el) => {return el.data}),
+        data: valueData,
         type: 'line',
         smooth: true,
         label: {
-          show: true,
+          show: false,
           position: 'top'
         },
       }
@@ -37,18 +42,20 @@ const Water = (props) => {
         saveAsImage: {}
       }
     },
-  };
+  }}, [timeData, valueData, title]);
 
   isArea && option.series.forEach((el) => el.areaStyle = {});
 
   useEffect(() => {
     echarts.use([GaugeChart, CanvasRenderer]);
     var chartDom = document.getElementById(id);
-    var myChart = echarts.init(chartDom);
-    myChart.setOption(option); 
-    return(() => myChart.dispose())
-    // eslint-disable-next-line 
-  })
+    setMyChart(echarts.init(chartDom));
+    return(() => myChart?.dispose())
+  }, [id, myChart])
+
+  useEffect(() => {
+    myChart?.setOption(option); 
+  }, [myChart, option])
 
   return (
     <div id={id} style={{width: '100%', height: 300}}>

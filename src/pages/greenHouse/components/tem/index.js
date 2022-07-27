@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import * as echarts from 'echarts/core';
 import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 
 const Tem = (props) => {
   const data = props.data;
+  const [myChart, setMyChart] = useState(null);
 
-  var option = {
+  var option = useMemo(() => {
+    return {
     title: {
       text: props.title,
       textStyle: {
@@ -120,16 +122,18 @@ const Tem = (props) => {
         ]
       }
     ]
-  };
+  }}, [data, props?.title]);
 
   useEffect(() => {
     echarts.use([GaugeChart, CanvasRenderer]);
     var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
-    myChart.setOption(option); 
-    return(() => myChart.dispose())
-    // eslint-disable-next-line
-  })
+    setMyChart(echarts.init(chartDom));
+    return(() => myChart?.dispose())
+  }, [myChart])
+
+  useEffect(() => {
+    myChart?.setOption(option); 
+  }, [myChart, option])
 
   return (
     <div id='main' style={{width: 400, height: 300}}>

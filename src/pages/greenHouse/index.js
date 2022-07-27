@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Nav, Breadcrumb, Tab, Switch, NumberPicker, Button, Message  } from '@alifd/next';
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/navigation/index";
@@ -39,6 +39,18 @@ const GreenHouse = () => {
   const [autoFanValue, setAutoFanValue] = useState(0);
   const [autoFanLoading, setAutoFanLoading] = useState(false);
 
+  const getData = useCallback(() => {
+    getTemp().then(res => 
+      setDataList((oldState) => {return oldState.temp.length !== res.length ? {...oldState, temp: res} : oldState})
+    );
+    getHum().then(res => 
+      setDataList((oldState) => {return oldState.hum.length !== res.length ? {...oldState, hum: res} : oldState})
+    );
+    getWater().then(res => 
+      setDataList((oldState) => {return oldState.water.length !== res.length ? {...oldState, water: res} : oldState})
+    )
+  }, [setDataList])
+
   useEffect(() => {
     getIrrigationValue().then(res => {
       const { irrigationValue } = res;
@@ -54,20 +66,14 @@ const GreenHouse = () => {
         setAutoFanValue(fanValue);        
       }
     });
+    getData();
+
     const timer = setInterval(() => {
-      getTemp().then(res => 
-        setDataList((oldState) => {return oldState.temp.length !== res.length ? {...oldState, temp: res} : oldState})
-      );
-      getHum().then(res => 
-        setDataList((oldState) => {return oldState.hum.length !== res.length ? {...oldState, hum: res} : oldState})
-      );
-      getWater().then(res => 
-        setDataList((oldState) => {return oldState.water.length !== res.length ? {...oldState, water: res} : oldState})
-      )
+      getData();
     }, 3000)
 
     return () => clearInterval(timer)
-  }, []);
+  }, [getData]);
 
   const postAutoIrrigationValue = async (shutFlag = false) => {
     setAutoIrrigationLoading(true);

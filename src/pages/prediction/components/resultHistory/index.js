@@ -29,18 +29,23 @@ export const ResultHistory = memo((props) => {
   const [data, setData] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [percent, setPercent] = useState(0);
-  var timer = null;
   const opentimer = () => {
     setDialog(true);
-    timer = setInterval(() => {
-      setPercent(old => percent < 100 ? old + 10 : old)
-    }, 800)
+    var timer = setInterval(() => {
+      setPercent(old => old + 20)
+    }, 1000)
+    setTimeout(() => {
+      clearInterval(timer)
+    }, 5000)
   }
-  const stoptimer = () => {console.log(timer);setDialog(false); setPercent(0); clearInterval(timer)}
+  const stoptimer = () => {
+    setDialog(false);
+    setPercent(0);
+  }
 
   useEffect(() => {
     getPredictionHistory().then(res => {
-      setData(res);
+      setData(res.reverse());
     })}, [])
 
   const textRender = percent => {
@@ -78,7 +83,7 @@ export const ResultHistory = memo((props) => {
       <div className="list">
         <h2>历史识别数据</h2>
         <List
-          dataSource={data.reverse() || mockdata}
+          dataSource={data || mockdata}
           size={'medium'}
           renderItem={(item) => (
             <List.Item
@@ -98,10 +103,10 @@ export const ResultHistory = memo((props) => {
             title="正在进行智能匹配农药喷洒"
             visible={dialog}
             onOk={stoptimer}
-            onClose={() => {setDialog(false); setPercent(0); clearInterval(timer)}}
+            onClose={stoptimer}
             style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
           >
-            <p>已开启智能匹配农药喷洒，以下为喷洒进度</p>
+            <p>已为您开启智能匹配农药喷洒，喷洒将在大约5秒后自动关闭</p>
             <Progress
               percent={percent > 100 ? 100 : percent}
               textRender={textRender}
