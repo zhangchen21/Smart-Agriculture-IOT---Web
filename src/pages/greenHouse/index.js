@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { Nav, Breadcrumb, Tab, Switch, NumberPicker, Button, Message  } from '@alifd/next';
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/navigation/index";
@@ -22,10 +22,6 @@ const Houses = [
     id: 2,
     isSigned: false
   },
-  // {
-  //   name: '我的温室3',
-  //   id: 3
-  // },
 ];
 const { getIrrigationValue, getTemp, getHum, getWater, sendAutoIrrigationValue, getFanValue, sendAutoFanValue } = api;
 
@@ -70,7 +66,7 @@ const GreenHouse = () => {
 
     const timer = setInterval(() => {
       getData();
-    }, 3000)
+    }, 500)
 
     return () => clearInterval(timer)
   }, [getData]);
@@ -127,6 +123,8 @@ const GreenHouse = () => {
     )
   }
 
+  const cloneList = useMemo(() => JSON.parse(JSON.stringify(dataList)), [dataList]);
+
   return (
     <div className="greenHouse">
       <div className="nav">
@@ -158,11 +156,11 @@ const GreenHouse = () => {
                   <Tab.Item title="概览数据" key="1">
                     <div className='dataSet'>
                       {
-                        Object.keys(dataList).map((key) => 
+                        Object.keys(cloneList).map((key) => 
                           <div className='dataBlock'>
                             <div className="p1">当日最高{key}</div>
-                            <div className="data">{dataList[key].sort((a, b) => a.data - b.data).at(-1)?.data}</div>
-                            <div className="p2">最低 {dataList[key].sort((a, b) => a.data - b.data)[0]?.data}</div>
+                            <div className="data">{cloneList[key].sort((a, b) => a.data - b.data).at(-1)?.data}</div>
+                            <div className="p2">最低 {cloneList[key].sort((a, b) => a.data - b.data)[0]?.data}</div>
                           </div>
                         )
                       }                  

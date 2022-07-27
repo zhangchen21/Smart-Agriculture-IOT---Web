@@ -6,11 +6,9 @@ import moment from 'moment';
 
 const Water = (props) => {
   const { data, id, isArea = false, title } = props;
-  if(data.length > 12) data.splice(0, data.length - 12);
   const [myChart, setMyChart] = useState(null);
-  const timeData = data.map(el => moment(el.time).format('HH:mm:ss'));
-  const valueData = data.map(el => Number(el.data));
-
+  const timeData = data.slice(data.length - 12).map(el => moment(el.time).format('HH:mm:ss'));
+  const valueData = data.slice(data.length - 12).map(el => Number(el.data));
   var option = useMemo(() => {
     return {
     title: {

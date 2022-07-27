@@ -5,7 +5,6 @@ const { H1, H2, Paragraph } = Typography;
 
 export const ResultContent = memo((props) => {
   const { chineseName, description, methon} = props?.bugData;
-  console.log(props)
 
   return (
     <div style={{width: '100%'}}>
