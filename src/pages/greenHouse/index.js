@@ -37,13 +37,13 @@ const GreenHouse = () => {
 
   const getData = useCallback(() => {
     getTemp().then(res => 
-      setDataList((oldState) => {return oldState.temp.length !== res.length ? {...oldState, temp: res} : oldState})
+      setDataList((oldState) => {return {...oldState, temp: res}})
     );
     getHum().then(res => 
-      setDataList((oldState) => {return oldState.hum.length !== res.length ? {...oldState, hum: res} : oldState})
+      setDataList((oldState) => {return {...oldState, hum: res}})
     );
     getWater().then(res => 
-      setDataList((oldState) => {return oldState.water.length !== res.length ? {...oldState, water: res} : oldState})
+      setDataList((oldState) => {return {...oldState, water: res}})
     )
   }, [setDataList])
 
@@ -66,7 +66,7 @@ const GreenHouse = () => {
 
     const timer = setInterval(() => {
       getData();
-    }, 500)
+    }, 1000)
 
     return () => clearInterval(timer)
   }, [getData]);

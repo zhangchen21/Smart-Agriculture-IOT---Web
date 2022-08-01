@@ -11,7 +11,7 @@ function Navigation() {
     const header = <span 
         className="fusion" 
         style={{color: 'black'}}
-    >智慧农业温室 IOT 系统</span>;
+    >惠农 IOT 系统</span>;
     // 根据 url 设置 defaultSelectedKeys
     page !== window.location.href.split('/').at(3) && setPage(window.location.href.split('/').at(3));
     return (

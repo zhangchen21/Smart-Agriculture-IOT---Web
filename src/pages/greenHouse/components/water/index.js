@@ -7,8 +7,8 @@ import moment from 'moment';
 const Water = (props) => {
   const { data, id, isArea = false, title } = props;
   const [myChart, setMyChart] = useState(null);
-  const timeData = data.slice(data.length > 12 ? - 12 : 0).map(el => moment(el.time).format('HH:mm:ss'));
-  const valueData = data.slice(data.length > 12 ? - 12 : 0).map(el => Number(el.data));
+  const timeData = data.map(el => moment(el.time).format('HH:mm:ss'));
+  const valueData = data.map(el => Number(el.data));
   var option = useMemo(() => {
     return {
     title: {
@@ -22,7 +22,8 @@ const Water = (props) => {
       data: timeData
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
+      min: 'dataMin'
     },
     series: [
       {

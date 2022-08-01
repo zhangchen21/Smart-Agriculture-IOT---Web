@@ -92,10 +92,10 @@ function Portal() {
       <div className="content">
         <div className="leftBox">
           <p>
-            智慧农业温室 IOT 系统
+            惠农 IOT 系统
           </p>
           <div className="info">
-            一个现代的 IOT 智慧农业 Web 管理系统
+            病虫害智能防护和自动控制系统
           </div>
           <div className="btns">
             <div className="btn" onClick={() => navigate('/dashBoard')}>

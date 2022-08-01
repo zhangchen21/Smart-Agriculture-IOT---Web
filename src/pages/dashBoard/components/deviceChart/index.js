@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 
-const DeviceChart = () => {
+const DeviceChart = (props) => {
   const option = {
     tooltip: {},
     legend: {
@@ -64,4 +64,4 @@ const DeviceChart = () => {
   />;
 };
 
-export default DeviceChart;
+export default React.memo(DeviceChart);
