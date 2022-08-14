@@ -59,7 +59,7 @@ const PieChart = (props) => {
     echarts.use([GaugeChart, CanvasRenderer]);
     var chartDom = document.getElementById(id);
     var myChart = echarts.init(chartDom);
-    myChart.setOption(option); 
+    myChart.setOption(option);
     return(() => myChart.dispose())
     // eslint-disable-next-line 
   })

@@ -8,23 +8,6 @@ import './index.scss'
 
 const { getPredictionHistory } = api;
 
-const mockdata = [
-  {
-    title: "这是Mock数据，接口未返回信息时显示",
-    description:
-      "随着互联网行业的聚变式发展，在电商业务从“信息透出” 到 “在线交易” 的过程中，网站 UI 构建也经历了“体验一致性”、“设计效率”、“UI系统构建/应用效率”、“多端适配” …",
-    author: "谢瑶 3 小时前更新",
-    img: "https://img.alicdn.com/tfs/TB1R5fio4v1gK0jSZFFXXb0sXXa-322-216.png"
-  },
-  {
-    title: "这是Mock数据，接口未返回信息时显示",
-    description:
-      "随着互联网行业的聚变式发展，在电商业务从“信息透出” 到 “在线交易” 的过程中，网站 UI 构建也经历了“体验一致性”、“设计效率”、“UI系统构建/应用效率”、“多端适配” …",
-    author: "谢瑶 3 小时前更新",
-    img: "https://img.alicdn.com/tfs/TB1R5fio4v1gK0jSZFFXXb0sXXa-322-216.png"
-  },
-];
-
 export const ResultHistory = memo((props) => {
   const [data, setData] = useState([]);
   const [dialog, setDialog] = useState(false);
@@ -44,7 +27,7 @@ export const ResultHistory = memo((props) => {
   }
 
   useEffect(() => {
-    getPredictionHistory().then(res => {
+    getPredictionHistory('getPredictionHistory').then(res => {
       setData(res.reverse());
     })}, [])
 
@@ -83,7 +66,7 @@ export const ResultHistory = memo((props) => {
       <div className="list">
         <h2>历史识别数据</h2>
         <List
-          dataSource={data || mockdata}
+          dataSource={data}
           size={'medium'}
           renderItem={(item) => (
             <List.Item

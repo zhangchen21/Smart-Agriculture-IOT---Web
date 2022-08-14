@@ -26,7 +26,7 @@ export const PredictionArea = memo(() => {
     if(photo1.search(`${Serve}`) === -1) {
       Message.notice("请先上传您要检测的图片");
     } else {
-      getPredictionResult(photoName).then((res) => {
+      getPredictionResult(photoName, 'getPredictionResult').then((res) => {
         setResultGetting(false);
         setPhoto2(`${Serve}/attachment/result.jpg`)
         setBugData(res?.data?.[0])

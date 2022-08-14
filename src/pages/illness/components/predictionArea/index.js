@@ -7,14 +7,15 @@ import api from '../../../../api/api';
 import './index.scss'
 
 const { getPredictionResult } = api;
+const utilsPhoto = "https://img2.baidu.com/it/u=2097394255,1885956461&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
 
 
-export const PredictionArea = memo(() => {
+export const IllnesspredictionArea = memo(() => {
   const [step, setStep] = useState(-1);
   const [photoName, setPhotoName] = useState("");
   const [resultGetting, setResultGetting] = useState(false);
-  const [photo1, setPhoto1] = useState("https://img0.baidu.com/it/u=1642242308,788079207&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500");
-  const [photo2, setPhoto2] = useState("https://img0.baidu.com/it/u=1642242308,788079207&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500");
+  const [photo1, setPhoto1] = useState(utilsPhoto);
+  const [photo2, setPhoto2] = useState(utilsPhoto);
   const [bugData, setBugData] = useState("");
 
   const upLoadPhoto = {
@@ -26,7 +27,7 @@ export const PredictionArea = memo(() => {
     if(photo1.search(`${Serve}`) === -1) {
       Message.notice("请先上传您要检测的图片");
     } else {
-      getPredictionResult(photoName).then((res) => {
+      getPredictionResult(photoName, 'getIllnessResult').then((res) => {
         setResultGetting(false);
         setPhoto2(`${Serve}/attachment/result.jpg`)
         setBugData(res?.data[0])

@@ -21,7 +21,7 @@ const navItems = [
 
 function Illness() {
     let navigate = useNavigate();
-    const [page, setPage] = useState('/predictionArea');
+    const [page, setPage] = useState('/illness');
     page !== window.location.href.split('/').at(4) && setPage(window.location.href.split('/').at(4));
 
     return (
@@ -32,7 +32,7 @@ function Illness() {
             <div className="body">
                 <div className="sideBar">
                     <div className="title">害虫识别与统计</div>
-                    <Nav type='line' defaultSelectedKeys={[page || 'predictionArea']}>
+                    <Nav type='line' defaultSelectedKeys={[page || 'illnesspredictionArea']}>
                         {
                         navItems.map((navItem) => (
                             <Item

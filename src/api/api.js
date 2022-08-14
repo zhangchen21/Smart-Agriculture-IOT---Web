@@ -66,9 +66,10 @@ const api = {
     return data;
   },
 
-  async getPredictionResult(photoName) {
+  async getPredictionResult(photoName, api) {
+    console.log(api)
     const { data } = await axios({
-      url:`${Serve}/getPredictionResult`,
+      url:`${Serve}/${api}`,
       method:'get',
       params: {
         photoName
@@ -77,9 +78,9 @@ const api = {
     return data;
   },
 
-  async getPredictionHistory() {
+  async getPredictionHistory(api) {
     const { data } = await axios({
-      url:`${Serve}/getPredictionHistory`,
+      url:`${Serve}/${api}`,
       method:'get',
     })
     return data;

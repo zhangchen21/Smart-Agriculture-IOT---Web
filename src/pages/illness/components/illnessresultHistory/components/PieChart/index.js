@@ -4,8 +4,9 @@ import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 
 const PieChart = (props) => {
-  const { data, id, title } = props;
+  const { data: data1, id, title } = props;
   let series = new Map();
+  const data = data1.map((el) => el.chineseName)
   data.forEach((el) => {
     if(series.has(el)) series.set(el, series.get(el) + 1);
     else series.set(el, 1);
@@ -22,10 +23,7 @@ const PieChart = (props) => {
     legend: {
       left: 'center',
       top: 'bottom',
-      data: [
-        '缺钾',
-        '缺氮'
-      ]
+      data: Array.from(new Set(data))
     },
     toolbox: {
       show: true,
@@ -46,14 +44,13 @@ const PieChart = (props) => {
         itemStyle: {
           borderRadius: 5
         },
-        data:[
-          {
-            value: 2, name: '缺钾'
-          },
-          {
-            value: 1, name: '缺氮'
-          }
-        ]
+        data: 
+          Array.from(new Set(data)).map((el) => {
+            return {
+              value: series.get(el),
+              name: el
+            }
+          })
       }
     ]
   };
